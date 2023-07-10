@@ -5,7 +5,7 @@
 //  Created by Dmytro Akulinin on 10.07.2023.
 //
 
-import Foundation
+import UIKit
 
 class MainCoordinator: Coordinator {
     
