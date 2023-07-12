@@ -24,7 +24,8 @@ class MainCoordinator: Coordinator {
     }
     
     func start() {
-        let vc = ViewController()
+        let vm = CategoriesViewModel()
+        let vc = CategoriesViewController(viewModel: vm)
 //        let handler: EventHandler = { [weak self] event in
 //            switch event {
 //                case .displayForecast(let forecast):

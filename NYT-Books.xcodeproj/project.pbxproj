@@ -19,6 +19,10 @@
 		6672EBAB2A5BF5FB00D8CFB2 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6672EBAA2A5BF5FB00D8CFB2 /* Book.swift */; };
 		6672EBAD2A5BF71C00D8CFB2 /* BookListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6672EBAC2A5BF71C00D8CFB2 /* BookListResponse.swift */; };
 		6672EBAF2A5BF72500D8CFB2 /* BookList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6672EBAE2A5BF72500D8CFB2 /* BookList.swift */; };
+		6672EBB12A5BF7FD00D8CFB2 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6672EBB02A5BF7FD00D8CFB2 /* NetworkService.swift */; };
+		6672EBB32A5C16E200D8CFB2 /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6672EBB22A5C16E200D8CFB2 /* CategoriesViewController.swift */; };
+		6672EBB52A5C16FA00D8CFB2 /* CategoriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6672EBB42A5C16FA00D8CFB2 /* CategoriesViewModel.swift */; };
+		6672EBBA2A5C1D3600D8CFB2 /* CategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6672EBB92A5C1D3600D8CFB2 /* CategoryTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +40,10 @@
 		6672EBAA2A5BF5FB00D8CFB2 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		6672EBAC2A5BF71C00D8CFB2 /* BookListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookListResponse.swift; sourceTree = "<group>"; };
 		6672EBAE2A5BF72500D8CFB2 /* BookList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookList.swift; sourceTree = "<group>"; };
+		6672EBB02A5BF7FD00D8CFB2 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		6672EBB22A5C16E200D8CFB2 /* CategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
+		6672EBB42A5C16FA00D8CFB2 /* CategoriesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewModel.swift; sourceTree = "<group>"; };
+		6672EBB92A5C1D3600D8CFB2 /* CategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +107,7 @@
 		6672EB9D2A5BF0D900D8CFB2 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				6672EBB42A5C16FA00D8CFB2 /* CategoriesViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -106,6 +115,7 @@
 		6672EB9E2A5BF0E300D8CFB2 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				6672EBB02A5BF7FD00D8CFB2 /* NetworkService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -113,6 +123,7 @@
 		6672EB9F2A5BF0E700D8CFB2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				6672EBB82A5C1D1D00D8CFB2 /* Categories */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -131,6 +142,15 @@
 				6672EBA42A5BF1FB00D8CFB2 /* MainCoordinator.swift */,
 			);
 			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		6672EBB82A5C1D1D00D8CFB2 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				6672EBB22A5C16E200D8CFB2 /* CategoriesViewController.swift */,
+				6672EBB92A5C1D3600D8CFB2 /* CategoryTableViewCell.swift */,
+			);
+			path = Categories;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -203,13 +223,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6672EBB12A5BF7FD00D8CFB2 /* NetworkService.swift in Sources */,
 				6672EBAB2A5BF5FB00D8CFB2 /* Book.swift in Sources */,
+				6672EBB32A5C16E200D8CFB2 /* CategoriesViewController.swift in Sources */,
 				6672EBA22A5BF1BC00D8CFB2 /* Coordinator.swift in Sources */,
 				6672EBAF2A5BF72500D8CFB2 /* BookList.swift in Sources */,
+				6672EBBA2A5C1D3600D8CFB2 /* CategoryTableViewCell.swift in Sources */,
 				6672EB8D2A5BECBC00D8CFB2 /* ViewController.swift in Sources */,
 				6672EBA92A5BF47800D8CFB2 /* CategoriesResponse.swift in Sources */,
 				6672EB892A5BECBC00D8CFB2 /* AppDelegate.swift in Sources */,
 				6672EBAD2A5BF71C00D8CFB2 /* BookListResponse.swift in Sources */,
+				6672EBB52A5C16FA00D8CFB2 /* CategoriesViewModel.swift in Sources */,
 				6672EBA52A5BF1FB00D8CFB2 /* MainCoordinator.swift in Sources */,
 				6672EB8B2A5BECBC00D8CFB2 /* SceneDelegate.swift in Sources */,
 				6672EBA72A5BF44400D8CFB2 /* Category.swift in Sources */,
