@@ -44,4 +44,3 @@ class BookCellViewModel {
 }
 
 
-// book's name, description, author, publisher, image, and rank. Additionally, there should be a link to buy this book.

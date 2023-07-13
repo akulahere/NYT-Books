@@ -53,6 +53,9 @@ class BookListViewController: UIViewController, BooksListViewModelDelegate, Erro
     }
     
     private func fetchBooks() {
+        DispatchQueue.main.async { [weak self] in
+            self?.view.showSpinner()
+        }
         Task {
             await viewModel.getBooks()
         }
@@ -60,15 +63,17 @@ class BookListViewController: UIViewController, BooksListViewModelDelegate, Erro
     
     func didUpdateBooks() {
         print("books was updated")
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
+        DispatchQueue.main.async { [weak self] in
+            self?.view.hideSpinner()
+            self?.tableView.reloadData()
         }
     }
 
     
     func didFailWithError(error: Error) {
-        DispatchQueue.main.async {
-            self.present(error: error)
+        DispatchQueue.main.async { [weak self] in
+            self?.view.hideSpinner()
+            self?.present(error: error)
         }
     }
 }
@@ -83,6 +88,7 @@ extension BookListViewController:  UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: BookListTableViewCell.id, for: indexPath) as! BookListTableViewCell
         let book = viewModel.books[indexPath.row]
         let bookVM = BookCellViewModel(book: book, networkService: viewModel.networkService)
+        cell.delegate = self
         Task {
             await cell.configure(with: bookVM)
         }
@@ -90,7 +96,12 @@ extension BookListViewController:  UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let encodedName = viewModel.categories[indexPath.row].listNameEncoded
-//        eventHandler?(.displayBookList(encodedName))
+
+    }
+}
+
+extension  BookListViewController: BookListTableViewCellDelegate {
+    func didTapBuyButton(url: URL) {
+        eventHandler?(.displayWebPage(url))
     }
 }

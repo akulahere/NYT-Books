@@ -9,4 +9,5 @@ import Foundation
 
 enum ViewControllerEvent {
     case displayBookList(String)
+    case displayWebPage(URL)
 }

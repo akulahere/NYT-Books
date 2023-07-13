@@ -49,26 +49,30 @@ class CategoriesViewController: UIViewController, ErrorHandler  {
     }
     
     private func fetchCategories() {
+        DispatchQueue.main.async { [weak self] in
+            self?.view.showSpinner()
+        }
         Task {
             await viewModel.getCategories()
         }
     }
-    
-    
 }
 
 
 
 extension CategoriesViewController: CategoriesViewModelDelegate {
     func didUpdateCategories() {
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.view.hideSpinner()
+            self?.tableView.reloadData()
         }
     }
     
     func didFailWithError(error: Error) {
-        DispatchQueue.main.async {
-            self.present(error: error)
+        DispatchQueue.main.async { [weak self] in
+            self?.view.hideSpinner()
+            self?.present(error: error)
         }
     }
 }
@@ -88,5 +92,8 @@ extension CategoriesViewController:  UITableViewDataSource, UITableViewDelegate 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let encodedName = viewModel.categories[indexPath.row].listNameEncoded
         eventHandler?(.displayBookList(encodedName))
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
+
+

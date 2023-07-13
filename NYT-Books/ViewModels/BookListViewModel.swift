@@ -30,7 +30,6 @@ class BookListViewModel {
             self.books = bookListResponse.results.books
             await delegate?.didUpdateBooks()
         } catch {
-            print("ERROR DURING GETTING BOOKS")
             await delegate?.didFailWithError(error: error)
         }
     }

@@ -7,8 +7,14 @@
 
 import UIKit
 
+protocol BookListTableViewCellDelegate: BookListViewController {
+    func didTapBuyButton(url: URL)
+}
+
 class BookListTableViewCell: UITableViewCell {
     public static let id = "BookCell"
+    private var buyUrl: URL?
+    weak var delegate: BookListTableViewCellDelegate?
 
     let bookImageView: UIImageView = {
         let imageView = UIImageView()
@@ -67,7 +73,7 @@ class BookListTableViewCell: UITableViewCell {
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+        super.setSelected(false, animated: animated)
 
     }
     
@@ -82,7 +88,7 @@ class BookListTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-//        titleLabel.text = nil
+        titleLabel.text = nil
     }
     
     private func setupSubviews() {
@@ -136,20 +142,36 @@ class BookListTableViewCell: UITableViewCell {
         descriptionLabel.text = viewModel.bookDescription()
         publisherLabel.text = "Publisher: \(viewModel.bookPublisher())"
         rankLabel.text = "Current rank: \(viewModel.bookRank())"
-        buyButton.addTarget(self, action: #selector(buyButtonTapped), for: .touchUpInside)
+        if let buyLink = viewModel.bookBuyLink() {
+            self.buyUrl = buyLink
+            buyButton.addTarget(self, action: #selector(buyButtonTapped), for: .touchUpInside)
+        } else {
+            buyButton.isHidden = true
+        }
+        
+        
+        
+        DispatchQueue.main.async {
+            self.bookImageView.showSpinner()
+        }
         
         do {
             bookImageView.image = try await viewModel.bookImage()
+            DispatchQueue.main.async {
+                self.bookImageView.hideSpinner()
+            }
         } catch {
             print(error)
-            bookImageView.image = nil
+            bookImageView.image = UIImage(systemName: "book.closed")
+            DispatchQueue.main.async {
+                self.bookImageView.hideSpinner()
+            }
         }
     }
     
     @objc func buyButtonTapped() {
-        // Add code to open the buy link
+        if let url = buyUrl {
+            delegate?.didTapBuyButton(url: url)
+        }
     }
 }
-
-
-
