@@ -23,6 +23,8 @@
 		6622FAED2A603C87008AA5D6 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6622FAEC2A603C87008AA5D6 /* WebViewController.swift */; };
 		6622FAF02A6059F6008AA5D6 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 6622FAEF2A6059F6008AA5D6 /* Realm */; };
 		6622FAF22A6059F6008AA5D6 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 6622FAF12A6059F6008AA5D6 /* RealmSwift */; };
+		6622FAF42A605A4C008AA5D6 /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6622FAF32A605A4C008AA5D6 /* CacheManager.swift */; };
+		6622FAF62A605A7F008AA5D6 /* RealmModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6622FAF52A605A7F008AA5D6 /* RealmModels.swift */; };
 		6672EB892A5BECBC00D8CFB2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6672EB882A5BECBC00D8CFB2 /* AppDelegate.swift */; };
 		6672EB8B2A5BECBC00D8CFB2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6672EB8A2A5BECBC00D8CFB2 /* SceneDelegate.swift */; };
 		6672EB8D2A5BECBC00D8CFB2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6672EB8C2A5BECBC00D8CFB2 /* ViewController.swift */; };
@@ -56,6 +58,8 @@
 		6622FAE82A6030D9008AA5D6 /* WeakBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakBox.swift; sourceTree = "<group>"; };
 		6622FAEA2A6032D7008AA5D6 /* UIView+Spinnable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Spinnable.swift"; sourceTree = "<group>"; };
 		6622FAEC2A603C87008AA5D6 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		6622FAF32A605A4C008AA5D6 /* CacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
+		6622FAF52A605A7F008AA5D6 /* RealmModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmModels.swift; sourceTree = "<group>"; };
 		6672EB852A5BECBC00D8CFB2 /* NYT-Books.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "NYT-Books.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6672EB882A5BECBC00D8CFB2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6672EB8A2A5BECBC00D8CFB2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -160,6 +164,8 @@
 			children = (
 				6672EBB02A5BF7FD00D8CFB2 /* NetworkService.swift */,
 				6622FAE22A603060008AA5D6 /* SpinnerService.swift */,
+				6622FAF32A605A4C008AA5D6 /* CacheManager.swift */,
+				6622FAF52A605A7F008AA5D6 /* RealmModels.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -293,8 +299,10 @@
 				6622FADD2A601C46008AA5D6 /* BookCellViewModel.swift in Sources */,
 				6622FAE32A603060008AA5D6 /* SpinnerService.swift in Sources */,
 				6622FAE52A60308C008AA5D6 /* Spinner.swift in Sources */,
+				6622FAF62A605A7F008AA5D6 /* RealmModels.swift in Sources */,
 				6672EBA22A5BF1BC00D8CFB2 /* Coordinator.swift in Sources */,
 				6622FAD92A5FFC58008AA5D6 /* BookListViewModel.swift in Sources */,
+				6622FAF42A605A4C008AA5D6 /* CacheManager.swift in Sources */,
 				6622FAED2A603C87008AA5D6 /* WebViewController.swift in Sources */,
 				6622FAE92A6030D9008AA5D6 /* WeakBox.swift in Sources */,
 				6622FAD22A5FF7DA008AA5D6 /* EventHandler.swift in Sources */,
