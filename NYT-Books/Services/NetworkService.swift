@@ -9,37 +9,29 @@ import UIKit
 
 
 protocol NetworkServiceProtocol {
-
+    func fetchCategories() async throws -> CategoriesResponse
+    func fetchBooks(name: String) async throws -> BooksListResponse
+    func fetchImage(from url: URL) async throws -> UIImage
 }
 
 
 class NetworkService: NetworkServiceProtocol {
     
-    // MARK: -
-    // MARK: Variables
-
     private let baseURL: String
     private let token: String
-
-
-    // MARK: -
-    // MARK: Initialization
     
     init(baseURL: String = "https://api.nytimes.com/svc/books/v3/", token: String = "ZRRgQ8cHos6TN6JwAP3KwSWUACYGAHLU") {
         self.baseURL = baseURL
         self.token = token
     }
     
-    // MARK: -
-    // MARK: Public
-
     func fetchCategories() async throws -> CategoriesResponse {
         guard let url = URL(string: "\(baseURL)/lists/names.json?api-key=\(token)") else {
             throw NetworkServiceError.invalidURL
         }
-
+        
         let (data, response) = try await URLSession.shared.data(from: url)
-
+        
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
             throw NetworkServiceError.serverError
         }
@@ -53,14 +45,11 @@ class NetworkService: NetworkServiceProtocol {
     
     func fetchBooks(name: String) async throws -> BooksListResponse {
         guard let url = URL(string: "\(baseURL)lists/current/\(name).json?api-key=\(token)") else {
-            print("url error")
             throw NetworkServiceError.invalidURL
         }
-        print(url)
         let (data, response) = try await URLSession.shared.data(from: url)
         
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-            print("Network service error")
             throw NetworkServiceError.serverError
         }
         

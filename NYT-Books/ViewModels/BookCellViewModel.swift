@@ -9,9 +9,9 @@ import UIKit
 
 class BookCellViewModel {
     let book: Book
-    let networkService: NetworkService
+    let networkService: NetworkServiceProtocol
 
-    init(book: Book, networkService: NetworkService) {
+    init(book: Book, networkService: NetworkServiceProtocol) {
         self.book = book
         self.networkService = networkService
     }

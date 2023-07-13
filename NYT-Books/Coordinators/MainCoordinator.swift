@@ -49,7 +49,6 @@ class MainCoordinator: Coordinator {
     
     func displayWebPage(url: URL) {
         let webVC = WebViewController(url: url)
-        print("URL Loading")
         navigationController.pushViewController(webVC, animated: true)
     }
 }

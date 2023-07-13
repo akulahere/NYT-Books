@@ -34,10 +34,10 @@ class BookListViewController: UIViewController, BooksListViewModelDelegate, Erro
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("Book list")
         viewModel.delegate = self
         setUpViews()
         fetchBooks()
+        self.navigationItem.title = viewModel.categoryName
     }
     
     func setUpViews() {
@@ -62,7 +62,6 @@ class BookListViewController: UIViewController, BooksListViewModelDelegate, Erro
     }
     
     func didUpdateBooks() {
-        print("books was updated")
         DispatchQueue.main.async { [weak self] in
             self?.view.hideSpinner()
             self?.tableView.reloadData()

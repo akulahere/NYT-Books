@@ -14,7 +14,8 @@ protocol CategoriesViewModelDelegate: CategoriesViewController {
 
 class CategoriesViewModel {
     var categories: [Category] = []
-    let networkService: NetworkService
+    let cacheManager: CacheManager = .shared
+    let networkService: NetworkServiceProtocol
     weak var delegate: CategoriesViewModelDelegate?
     
     init(networkService: NetworkService = NetworkService())  {
@@ -25,6 +26,10 @@ class CategoriesViewModel {
         do {
             let categoriesResponse = try await networkService.fetchCategories()
             self.categories = categoriesResponse.results
+            cacheManager.saveCategories(self.categories)
+            await delegate?.didUpdateCategories()
+        } catch NetworkServiceError.serverError {
+            self.categories = cacheManager.getCategories()
             await delegate?.didUpdateCategories()
         } catch {
             await delegate?.didFailWithError(error: error)

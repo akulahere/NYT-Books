@@ -12,40 +12,66 @@ import RealmSwift
 class CacheManager {
     static let shared = CacheManager()
     private let realm = try! Realm()
+    private let realmQueue = DispatchQueue(label: "realmQueue")
     
-    // Saving categories to the cache
     func saveCategories(_ categories: [Category]) {
-        do {
-            try realm.write {
-                let realmCategories = categories.map { RealmCategory(category: $0) }
-                realm.add(realmCategories)
+        realmQueue.async {
+            let realm = try! Realm()
+            do {
+                try realm.write {
+                    let realmCategories = categories.map { RealmCategory(category: $0) }
+                    realm.add(realmCategories)
+                }
+            } catch {
+                print("Error saving categories: \(error)")
             }
-        } catch {
-            print("Error saving categories: \(error)")
         }
     }
     
     // Retrieving categories from the cache
     func getCategories() -> [Category] {
-        let realmCategories = realm.objects(RealmCategory.self)
-        return realmCategories.map { Category(realmCategory: $0) }
+        var categories: [Category] = []
+
+        realmQueue.sync {
+                let realm = try! Realm()
+                let realmCategories = realm.objects(RealmCategory.self)
+                categories = realmCategories.map { Category(realmCategory: $0) }
+        }
+        
+        return categories
     }
     
     // Saving books to the cache
-    func saveBooks(_ books: [Book]) {
-        do {
-            try realm.write {
-                let realmBooks = books.map { RealmBook(book: $0) }
-                realm.add(realmBooks)
+    func saveBooks(_ books: [Book], forCategory categoryName: String) {
+        realmQueue.async {
+            do {
+                let realm = try Realm()
+                try realm.write {
+                    let realmCategory = realm.objects(RealmCategory.self).filter("listNameEncoded == %@", categoryName).first
+                    let realmBooks = books.map {
+                        let realmBook = RealmBook(book: $0)
+                        realmBook.category = realmCategory
+                        realmCategory?.books.append(realmBook)
+                        return realmBook
+                    }
+                    print("BOOKS SAVED")
+                    realm.add(realmBooks)
+                }
+            } catch {
+                print("Error saving books: \(error)")
             }
-        } catch {
-            print("Error saving books: \(error)")
         }
     }
+
+
     
-    // Retrieving books from the cache
-    func getBooks() -> [Book] {
-        let realmBooks = realm.objects(RealmBook.self)
-        return realmBooks.map { Book(realmBook: $0) }
+    func getBooks(forCategory categoryName: String) -> [Book] {
+        realmQueue.sync {
+            let realm = try! Realm()
+            let realmCategory = realm.objects(RealmCategory.self).filter("listNameEncoded == %@", categoryName).first
+            let realmBooks = realmCategory?.books ?? List<RealmBook>()
+            return realmBooks.map { Book(realmBook: $0) }
+        }
     }
+
 }

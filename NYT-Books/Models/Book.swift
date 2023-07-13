@@ -11,7 +11,6 @@ struct Book: Codable {
     let rank: Int
     let publisher: String
     let description: String
-    //    let price: String
     let title: String
     let author: String
     let bookImage: URL
@@ -24,10 +23,10 @@ struct Book: Codable {
         self.description = realmBook.bookDescription
         self.publisher = realmBook.publisher
         self.rank = realmBook.rank
+//        self.buyLinks = realmBook.buyLinks.map { BuyLink(name: $0.name, url: URL(string: $0.urlString!)) }
         self.buyLinks = []
-        
-        
     }
+    
     private enum CodingKeys: String, CodingKey {
         case rank
         case publisher

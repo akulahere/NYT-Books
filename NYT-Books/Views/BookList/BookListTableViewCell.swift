@@ -89,6 +89,12 @@ class BookListTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         titleLabel.text = nil
+        authorLabel.text = nil
+        descriptionLabel.text = nil
+        publisherLabel.text = nil
+        rankLabel.text = nil
+        buyUrl = nil
+//        self.bookImageView.showSpinner()
     }
     
     private func setupSubviews() {
@@ -161,7 +167,6 @@ class BookListTableViewCell: UITableViewCell {
                 self.bookImageView.hideSpinner()
             }
         } catch {
-            print(error)
             bookImageView.image = UIImage(systemName: "book.closed")
             DispatchQueue.main.async {
                 self.bookImageView.hideSpinner()
