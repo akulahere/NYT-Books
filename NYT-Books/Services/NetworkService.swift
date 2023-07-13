@@ -5,7 +5,7 @@
 //  Created by Dmytro Akulinin on 10.07.2023.
 //
 
-import Foundation
+import UIKit
 
 
 protocol NetworkServiceProtocol {
@@ -48,19 +48,34 @@ class NetworkService: NetworkServiceProtocol {
         return categoriesResponse
     }
     
-    func fetchCustomCategory(name: String) async throws -> BooksListResponse {
-        guard let url = URL(string: "\(baseURL)/lists/current/\(name).json?api-key=\(token)") else {
+    func fetchBooks(name: String) async throws -> BooksListResponse {
+        guard let url = URL(string: "\(baseURL)lists/current/\(name).json?api-key=\(token)") else {
+            print("url error")
             throw NetworkServiceError.invalidURL
         }
-
+        print(url)
         let (data, response) = try await URLSession.shared.data(from: url)
-
+        
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            print("Network service error")
             throw NetworkServiceError.serverError
         }
-
-        let booksListResponse = try JSONDecoder().decode(BooksListResponse.self, from: data)
-        return booksListResponse
+        do {
+            let booksListResponse = try JSONDecoder().decode(BooksListResponse.self, from: data)
+            return booksListResponse
+        } catch let decodeError {
+            print("Failed to decode JSON:", decodeError)
+            print("Data received: \(String(data: data, encoding: .utf8) ?? "Invalid data")")
+            throw decodeError // rethrow the error to the caller function
+        }
+    }
+    
+    func fetchImage(from url: URL) async throws -> UIImage {
+        let (data, _) = try await URLSession.shared.data(from: url)
+        guard let image = UIImage(data: data) else {
+            throw NetworkServiceError.decodingError
+        }
+        return image
     }
 }
 

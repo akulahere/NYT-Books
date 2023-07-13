@@ -25,7 +25,6 @@ class CategoriesViewModel {
         do {
             let categoriesResponse = try await networkService.fetchCategories()
             self.categories = categoriesResponse.results
-            print(categories)
             await delegate?.didUpdateCategories()
         } catch {
             await delegate?.didFailWithError(error: error)

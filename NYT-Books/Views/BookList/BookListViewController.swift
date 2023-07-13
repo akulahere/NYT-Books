@@ -15,8 +15,8 @@ class BookListViewController: UIViewController, BooksListViewModelDelegate {
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.rowHeight = 96
-        tableView.register(CategoryTableViewCell.self, forCellReuseIdentifier: CategoryTableViewCell.id)
+        tableView.rowHeight = 200
+        tableView.register(BookListTableViewCell.self, forCellReuseIdentifier: BookListTableViewCell.id)
         return tableView
     }()
     
@@ -34,6 +34,7 @@ class BookListViewController: UIViewController, BooksListViewModelDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("Book list")
         viewModel.delegate = self
         setUpViews()
         fetchBooks()
@@ -42,7 +43,6 @@ class BookListViewController: UIViewController, BooksListViewModelDelegate {
     func setUpViews() {
         tableView.dataSource = self
         tableView.delegate = self
-        
         view.addSubview(tableView)
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -59,8 +59,12 @@ class BookListViewController: UIViewController, BooksListViewModelDelegate {
     }
     
     func didUpdateBooks() {
-        
+        print("books was updated")
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
+
     
     func didFailWithError(error: Error) {
         
@@ -74,10 +78,12 @@ extension BookListViewController:  UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CategoryTableViewCell.id, for: indexPath) as! CategoryTableViewCell
-//        cell.configure(categoryName: viewModel.categories[indexPath.row].displayName)
-//        cell.delegate = self
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: BookListTableViewCell.id, for: indexPath) as! BookListTableViewCell
+        let book = viewModel.books[indexPath.row]
+        let bookVM = BookCellViewModel(book: book, networkService: viewModel.networkService)
+        Task {
+            await cell.configure(with: bookVM)
+        }
         return cell
     }
     

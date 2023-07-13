@@ -20,16 +20,17 @@ class BookListViewModel {
     
     init(networkService: NetworkService, categoryName: String)  {
         self.categoryName = categoryName
+        print("Init \(categoryName)")
         self.networkService = networkService
     }
     
     public func getBooks() async {
         do {
-            let bookListResponse = try await networkService.fetchCustomCategory(name: self.categoryName)
+            let bookListResponse = try await networkService.fetchBooks(name: self.categoryName)
             self.books = bookListResponse.results.books
-            print(books)
             await delegate?.didUpdateBooks()
         } catch {
+            print("ERROR DURING GETTING BOOKS")
             await delegate?.didFailWithError(error: error)
         }
     }
