@@ -132,10 +132,10 @@ class BookListTableViewCell: UITableViewCell {
     
     func configure(with viewModel: BookCellViewModel) async {
         titleLabel.text = viewModel.book.title
-        authorLabel.text = viewModel.bookAuthor()
+        authorLabel.text = "Author: \(viewModel.bookAuthor())"
         descriptionLabel.text = viewModel.bookDescription()
-        publisherLabel.text = viewModel.bookPublisher()
-        rankLabel.text = viewModel.bookRank()
+        publisherLabel.text = "Publisher: \(viewModel.bookPublisher())"
+        rankLabel.text = "Current rank: \(viewModel.bookRank())"
         buyButton.addTarget(self, action: #selector(buyButtonTapped), for: .touchUpInside)
         
         do {

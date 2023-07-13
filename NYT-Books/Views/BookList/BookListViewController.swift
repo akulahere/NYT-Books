@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BookListViewController: UIViewController, BooksListViewModelDelegate {
+class BookListViewController: UIViewController, BooksListViewModelDelegate, ErrorHandler {
     
     var viewModel: BookListViewModel
     var eventHandler: EventHandler?
@@ -67,7 +67,9 @@ class BookListViewController: UIViewController, BooksListViewModelDelegate {
 
     
     func didFailWithError(error: Error) {
-        
+        DispatchQueue.main.async {
+            self.present(error: error)
+        }
     }
 }
 

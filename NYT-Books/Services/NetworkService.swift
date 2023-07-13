@@ -43,9 +43,12 @@ class NetworkService: NetworkServiceProtocol {
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
             throw NetworkServiceError.serverError
         }
-
-        let categoriesResponse = try JSONDecoder().decode(CategoriesResponse.self, from: data)
-        return categoriesResponse
+        do {
+            let categoriesResponse = try JSONDecoder().decode(CategoriesResponse.self, from: data)
+            return categoriesResponse
+        } catch {
+            throw NetworkServiceError.decodingError
+        }
     }
     
     func fetchBooks(name: String) async throws -> BooksListResponse {
@@ -60,13 +63,12 @@ class NetworkService: NetworkServiceProtocol {
             print("Network service error")
             throw NetworkServiceError.serverError
         }
+        
         do {
             let booksListResponse = try JSONDecoder().decode(BooksListResponse.self, from: data)
             return booksListResponse
-        } catch let decodeError {
-            print("Failed to decode JSON:", decodeError)
-            print("Data received: \(String(data: data, encoding: .utf8) ?? "Invalid data")")
-            throw decodeError // rethrow the error to the caller function
+        } catch {
+            throw NetworkServiceError.decodingError
         }
     }
     

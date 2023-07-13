@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CategoriesViewController: UIViewController  {
+class CategoriesViewController: UIViewController, ErrorHandler  {
     private let viewModel: CategoriesViewModel
     var eventHandler: EventHandler?
     
@@ -67,7 +67,9 @@ extension CategoriesViewController: CategoriesViewModelDelegate {
     }
     
     func didFailWithError(error: Error) {
-        
+        DispatchQueue.main.async {
+            self.present(error: error)
+        }
     }
 }
 
