@@ -67,7 +67,6 @@ class CategoryTableViewCell: UITableViewCell {
     
     func configure(categoryName: String) {
         titleLabel.text = categoryName
-        print(titleLabel.text)
     }
     
     @objc private func categoryTapped() {

@@ -13,32 +13,34 @@ class MainCoordinator: Coordinator {
     // MARK: Variables
     
     private let navigationController: UINavigationController
+    private let netWorkService: NetworkService
 
     
     
     // MARK: -
     // MARK: Initialisators
     
-    init(navigationController: UINavigationController)    {
+    init(navigationController: UINavigationController, networkService: NetworkService)    {
         self.navigationController = navigationController
+        self.netWorkService = networkService
     }
     
     func start() {
         let vm = CategoriesViewModel()
         let vc = CategoriesViewController(viewModel: vm)
-//        let handler: EventHandler = { [weak self] event in
-//            switch event {
-//                case .displayForecast(let forecast):
-//                    self?.showDetailForecast(forecast: forecast)
-//            }
-//        }
-//
-//        vc.eventsHandler = handler
+        let handler: EventHandler = { [weak self] event in
+            switch event {
+                case .displayBookList(let categoryName):
+                    self?.displayBookList(name: categoryName)
+            }
+            
+        }
         self.navigationController.pushViewController(vc, animated: false)
     }
     
-//    func showDetailForecast(forecast: Forecast) {
-//        let detailForecastVC = DetailedForecastViewController(forecast: forecast, apiService: self.apiService)
-//        navigationController.pushViewController(detailForecastVC, animated: true)
-//    }
+    func displayBookList(name: String) {
+        let bookListVM = BookListViewModel()
+        let bookListVC = BookListViewController(categoryName: name)
+        navigationController.pushViewController(bookListVC, animated: true)
+    }
 }

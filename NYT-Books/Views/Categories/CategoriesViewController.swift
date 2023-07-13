@@ -9,6 +9,7 @@ import UIKit
 
 class CategoriesViewController: UIViewController  {
     private let viewModel: CategoriesViewModel
+    var eventHandler: EventHandler?
     
     private let tableView: UITableView = {
         let tableView = UITableView()
@@ -85,5 +86,11 @@ extension CategoriesViewController:  UITableViewDataSource, UITableViewDelegate 
         cell.delegate = self
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let encodedName = viewModel.categories[indexPath.row].listNameEncoded
+        eventHandler?(.displayBookList(encodedName))
+        print(encodedName)
     }
 }
