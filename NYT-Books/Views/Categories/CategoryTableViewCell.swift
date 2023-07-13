@@ -7,13 +7,7 @@
 
 import UIKit
 
-protocol CategoryTableViewCellDelegate: UIViewController {
-    func categoryTapped() 
-}
-
-class CategoryTableViewCell: UITableViewCell {
-    weak var delegate: CategoryTableViewCellDelegate?
-    
+class CategoryTableViewCell: UITableViewCell {    
     public static let id = "CategoryCell"
     
     private let titleLabel: UILabel = {
@@ -67,9 +61,5 @@ class CategoryTableViewCell: UITableViewCell {
     
     func configure(categoryName: String) {
         titleLabel.text = categoryName
-    }
-    
-    @objc private func categoryTapped() {
-        self.delegate?.categoryTapped()
     }
 }

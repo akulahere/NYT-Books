@@ -57,11 +57,7 @@ class CategoriesViewController: UIViewController  {
     
 }
 
-extension CategoriesViewController: CategoryTableViewCellDelegate {
-    func categoryTapped() {
-        
-    }
-}
+
 
 extension CategoriesViewController: CategoriesViewModelDelegate {
     func didUpdateCategories() {
@@ -83,7 +79,6 @@ extension CategoriesViewController:  UITableViewDataSource, UITableViewDelegate 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CategoryTableViewCell.id, for: indexPath) as! CategoryTableViewCell
         cell.configure(categoryName: viewModel.categories[indexPath.row].displayName)
-        cell.delegate = self
         
         return cell
     }
@@ -91,6 +86,5 @@ extension CategoriesViewController:  UITableViewDataSource, UITableViewDelegate 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let encodedName = viewModel.categories[indexPath.row].listNameEncoded
         eventHandler?(.displayBookList(encodedName))
-        print(encodedName)
     }
 }

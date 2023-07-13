@@ -15,8 +15,6 @@ class MainCoordinator: Coordinator {
     private let navigationController: UINavigationController
     private let netWorkService: NetworkService
 
-    
-    
     // MARK: -
     // MARK: Initialisators
     
@@ -31,16 +29,19 @@ class MainCoordinator: Coordinator {
         let handler: EventHandler = { [weak self] event in
             switch event {
                 case .displayBookList(let categoryName):
+                    print(categoryName)
                     self?.displayBookList(name: categoryName)
             }
             
         }
+        
+        vc.eventHandler = handler
         self.navigationController.pushViewController(vc, animated: false)
     }
     
     func displayBookList(name: String) {
-        let bookListVM = BookListViewModel()
-        let bookListVC = BookListViewController(categoryName: name)
+        let bookListVM = BookListViewModel(networkService: self.netWorkService, categoryName: name)
+        let bookListVC = BookListViewController(viewModel: bookListVM)
         navigationController.pushViewController(bookListVC, animated: true)
     }
 }
