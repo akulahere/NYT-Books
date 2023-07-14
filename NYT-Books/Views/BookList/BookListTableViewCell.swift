@@ -94,7 +94,7 @@ class BookListTableViewCell: UITableViewCell {
         publisherLabel.text = nil
         rankLabel.text = nil
         buyUrl = nil
-//        self.bookImageView.showSpinner()
+        bookImageView.image = nil
     }
     
     private func setupSubviews() {

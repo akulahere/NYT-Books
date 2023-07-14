@@ -8,46 +8,33 @@
 import UIKit
 
 class MainCoordinator: Coordinator {
-    
-    // MARK: -
-    // MARK: Variables
-    
+
     private let navigationController: UINavigationController
-    private let netWorkService: NetworkService
-    //    private lazy var handler: EventHandler = {[weak self] event in
-    //        switch event {
-    //            case .displayBookList(let categoryName):
-    //                self?.displayBookList(name: categoryName)
-    //            case .displayWebPage(let url):
-    //                self?.displayWebPage(url: url)
-    //        }
-    //    }
-    // MARK: -
-    // MARK: Initialisators
+    private let netWorkService: NetworkServiceProtocol
     
-    init(navigationController: UINavigationController, networkService: NetworkService) {
+    init(navigationController: UINavigationController, networkService: NetworkServiceProtocol) {
         self.navigationController = navigationController
         self.netWorkService = networkService
         
     }
     
     func start() {
-        let categoriesVM = CategoriesViewModel(networkService: self.netWorkService)
-        let categoriesVC = CategoriesViewController(viewModel: categoriesVM)
+        let viewModel = CategoriesViewModel(networkService: self.netWorkService)
+        let viewController = CategoriesViewController(viewModel: viewModel)
         let handler: EventHandler<CategoriesViewControllerEvent> = { [weak self] event in
             switch event {
                 case .displayBookList(let categoryName):
                     self?.displayBookList(name: categoryName)
             }
-            
         }
-        categoriesVC.eventHandler = handler
-        self.navigationController.pushViewController(categoriesVC, animated: false)
+        
+        viewController.eventHandler = handler
+        self.navigationController.pushViewController(viewController, animated: false)
     }
     
     func displayBookList(name: String) {
-        let bookListVM = BookListViewModel(networkService: self.netWorkService, categoryName: name)
-        let bookListVC = BookListViewController(viewModel: bookListVM)
+        let viewModel = BookListViewModel(networkService: self.netWorkService, categoryName: name)
+        let viewController = BookListViewController(viewModel: viewModel)
         let handler: EventHandler<BookListViewControllerEvent> = { [weak self] event in
             switch event {
                 case .displayWebPage(let url):
@@ -55,12 +42,12 @@ class MainCoordinator: Coordinator {
             }
             
         }
-        bookListVC.eventHandler = handler
-        navigationController.pushViewController(bookListVC, animated: true)
+        viewController.eventHandler = handler
+        navigationController.pushViewController(viewController, animated: true)
     }
     
     func displayWebPage(url: URL) {
-        let webVC = WebViewController(url: url)
-        navigationController.pushViewController(webVC, animated: true)
+        let viewController = WebViewController(url: url)
+        navigationController.pushViewController(viewController, animated: true)
     }
 }

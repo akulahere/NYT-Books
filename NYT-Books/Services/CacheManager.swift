@@ -48,13 +48,15 @@ class CacheManager {
                 let realm = try Realm()
                 try realm.write {
                     let realmCategory = realm.objects(RealmCategory.self).filter("listNameEncoded == %@", categoryName).first
-                    let realmBooks = books.map {
-                        let realmBook = RealmBook(book: $0)
+                    let existingBookTitles = Set(realmCategory?.books.map { $0.title } ?? [])
+                    
+                    let newBooks = books.filter { !existingBookTitles.contains($0.title) }
+                    let realmBooks = newBooks.map { book -> RealmBook in
+                        let realmBook = RealmBook(book: book)
                         realmBook.category = realmCategory
                         realmCategory?.books.append(realmBook)
                         return realmBook
                     }
-                    print("BOOKS SAVED")
                     realm.add(realmBooks)
                 }
             } catch {
@@ -62,8 +64,6 @@ class CacheManager {
             }
         }
     }
-
-
     
     func getBooks(forCategory categoryName: String) -> [Book] {
         realmQueue.sync {
