@@ -28,10 +28,10 @@ class BookListViewModel {
         do {
             let bookListResponse = try await networkService.fetchBooks(name: self.categoryName)
             self.books = bookListResponse.results.books
-            cacheManager.saveBooks(self.books, forCategory: categoryName)
+            await cacheManager.saveBooks(self.books, forCategory: categoryName)
             await delegate?.didUpdateBooks()
         } catch {
-            let cachedBooks = cacheManager.getBooks(forCategory: self.categoryName)
+            let cachedBooks = await cacheManager.getBooks(forCategory: self.categoryName)
             if !cachedBooks.isEmpty {
                 self.books = cachedBooks
                 await delegate?.didUpdateBooks()

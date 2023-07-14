@@ -26,10 +26,10 @@ class CategoriesViewModel {
         do {
             let categoriesResponse = try await networkService.fetchCategories()
             self.categories = categoriesResponse.results
-            cacheManager.saveCategories(self.categories)
+            await cacheManager.saveCategories(self.categories)
             await delegate?.didUpdateCategories()
         } catch {
-            let cachedCategories = cacheManager.getCategories()
+            let cachedCategories = await cacheManager.getCategories()
             if !cachedCategories.isEmpty {
                 self.categories = cachedCategories
                 await delegate?.didUpdateCategories()

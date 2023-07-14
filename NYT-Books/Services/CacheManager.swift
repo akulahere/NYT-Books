@@ -9,13 +9,11 @@ import Foundation
 
 import RealmSwift
 
-class CacheManager {
+actor CacheManager {
     static let shared = CacheManager()
     private let realm = try! Realm()
-    private let realmQueue = DispatchQueue(label: "realmQueue")
     
     func saveCategories(_ categories: [Category]) {
-        realmQueue.async {
             let realm = try! Realm()
             do {
                 try realm.write {
@@ -25,25 +23,21 @@ class CacheManager {
             } catch {
                 print("Error saving categories: \(error)")
             }
-        }
     }
     
     // Retrieving categories from the cache
     func getCategories() -> [Category] {
         var categories: [Category] = []
 
-        realmQueue.sync {
                 let realm = try! Realm()
                 let realmCategories = realm.objects(RealmCategory.self)
                 categories = realmCategories.map { Category(realmCategory: $0) }
-        }
         
         return categories
     }
     
     // Saving books to the cache
     func saveBooks(_ books: [Book], forCategory categoryName: String) {
-        realmQueue.async {
             do {
                 let realm = try Realm()
                 try realm.write {
@@ -62,16 +56,13 @@ class CacheManager {
             } catch {
                 print("Error saving books: \(error)")
             }
-        }
     }
     
     func getBooks(forCategory categoryName: String) -> [Book] {
-        realmQueue.sync {
             let realm = try! Realm()
             let realmCategory = realm.objects(RealmCategory.self).filter("listNameEncoded == %@", categoryName).first
             let realmBooks = realmCategory?.books ?? List<RealmBook>()
             return realmBooks.map { Book(realmBook: $0) }
         }
-    }
 
 }
