@@ -31,7 +31,6 @@ class RealmBook: Object {
     @objc dynamic var publisher: String = ""
     @objc dynamic var rank: Int = 0
     @objc dynamic var category: RealmCategory?
-    @Persisted var buyLinks = List<RealmBuyLink>()
 
 
     convenience init(book: Book) {
@@ -42,19 +41,8 @@ class RealmBook: Object {
         self.bookDescription = book.description
         self.publisher = book.publisher
         self.rank = book.rank
-        let realmBuyLinks = book.buyLinks.map { RealmBuyLink(buyLink: $0) }
-        buyLinks.append(objectsIn: realmBuyLinks)
     }
 }
 
 
-class RealmBuyLink: Object {
-    @Persisted var name: String = ""
-    @Persisted var urlString: String = ""
 
-    convenience init(buyLink: BuyLink) {
-        self.init()
-        self.name = buyLink.name
-        self.urlString = buyLink.url.absoluteString
-    }
-}

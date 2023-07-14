@@ -23,7 +23,6 @@ struct Book: Codable {
         self.description = realmBook.bookDescription
         self.publisher = realmBook.publisher
         self.rank = realmBook.rank
-//        self.buyLinks = realmBook.buyLinks.map { BuyLink(name: $0.name, url: URL(string: $0.urlString!)) }
         self.buyLinks = []
     }
     
