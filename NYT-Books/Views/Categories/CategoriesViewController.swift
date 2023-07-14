@@ -53,10 +53,10 @@ class CategoriesViewController: UIViewController, ErrorHandler  {
     }
     
     private func fetchCategories() {
-        DispatchQueue.main.async { [weak self] in
-            self?.view.showSpinner()
-        }
         Task {
+            await MainActor.run {
+                view.showSpinner()
+            }
             await viewModel.getCategories()
         }
     }
@@ -65,19 +65,18 @@ class CategoriesViewController: UIViewController, ErrorHandler  {
 
 
 extension CategoriesViewController: CategoriesViewModelDelegate {
+    
+    @MainActor
     func didUpdateCategories() {
         
-        DispatchQueue.main.async { [weak self] in
-            self?.view.hideSpinner()
-            self?.tableView.reloadData()
-        }
+        view.hideSpinner()
+        tableView.reloadData()
     }
     
+    @MainActor
     func didFailWithError(error: Error) {
-        DispatchQueue.main.async { [weak self] in
-            self?.view.hideSpinner()
-            self?.present(error: error)
-        }
+        view.hideSpinner()
+        present(error: error)
     }
 }
 

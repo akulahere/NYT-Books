@@ -155,20 +155,20 @@ class BookListTableViewCell: UITableViewCell {
             buyButton.isHidden = true
         }
         
-        
-        
-        DispatchQueue.main.async {
+        await MainActor.run {
             self.bookImageView.showSpinner()
         }
         
+        
         do {
             bookImageView.image = try await viewModel.bookImage()
-            DispatchQueue.main.async {
+            await MainActor.run {
                 self.bookImageView.hideSpinner()
             }
+
         } catch {
             bookImageView.image = UIImage(systemName: "book.closed")
-            DispatchQueue.main.async {
+            await MainActor.run {
                 self.bookImageView.hideSpinner()
             }
         }

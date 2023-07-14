@@ -58,27 +58,24 @@ class BookListViewController: UIViewController, BooksListViewModelDelegate, Erro
     }
     
     private func fetchBooks() {
-        DispatchQueue.main.async { [weak self] in
-            self?.view.showSpinner()
-        }
         Task {
+            await MainActor.run {
+                view.showSpinner()
+            }
             await viewModel.getBooks()
         }
     }
     
+    @MainActor
     func didUpdateBooks() {
-        DispatchQueue.main.async { [weak self] in
-            self?.view.hideSpinner()
-            self?.tableView.reloadData()
-        }
+            view.hideSpinner()
+            tableView.reloadData()
     }
 
-    
+    @MainActor
     func didFailWithError(error: Error) {
-        DispatchQueue.main.async { [weak self] in
-            self?.view.hideSpinner()
-            self?.present(error: error)
-        }
+            view.hideSpinner()
+            present(error: error)
     }
 }
 
