@@ -7,9 +7,13 @@
 
 import UIKit
 
+enum CategoriesViewControllerEvent {
+    case displayBookList(String)
+}
+
 class CategoriesViewController: UIViewController, ErrorHandler  {
     private let viewModel: CategoriesViewModel
-    var eventHandler: EventHandler?
+    var eventHandler: EventHandler<CategoriesViewControllerEvent>?
     
     private let tableView: UITableView = {
         let tableView = UITableView()

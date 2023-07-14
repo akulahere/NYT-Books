@@ -7,10 +7,15 @@
 
 import UIKit
 
+
+enum BookListViewControllerEvent {
+    case displayWebPage(URL)
+}
+
 class BookListViewController: UIViewController, BooksListViewModelDelegate, ErrorHandler {
     
     var viewModel: BookListViewModel
-    var eventHandler: EventHandler?
+    var eventHandler: EventHandler<BookListViewControllerEvent>?
     
     private let tableView: UITableView = {
         let tableView = UITableView()

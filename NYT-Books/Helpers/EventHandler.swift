@@ -7,4 +7,4 @@
 
 import Foundation
 
-typealias EventHandler = (ViewControllerEvent) -> Void
+typealias EventHandler<EventType> = (EventType) -> Void
