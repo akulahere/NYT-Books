@@ -41,6 +41,7 @@
 		6672EBB32A5C16E200D8CFB2 /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6672EBB22A5C16E200D8CFB2 /* CategoriesViewController.swift */; };
 		6672EBB52A5C16FA00D8CFB2 /* CategoriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6672EBB42A5C16FA00D8CFB2 /* CategoriesViewModel.swift */; };
 		6672EBBA2A5C1D3600D8CFB2 /* CategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6672EBB92A5C1D3600D8CFB2 /* CategoryTableViewCell.swift */; };
+		668A19D22A614E1B0005BF86 /* URLSessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668A19D12A614E1B0005BF86 /* URLSessionService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,6 +79,7 @@
 		6672EBB22A5C16E200D8CFB2 /* CategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
 		6672EBB42A5C16FA00D8CFB2 /* CategoriesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewModel.swift; sourceTree = "<group>"; };
 		6672EBB92A5C1D3600D8CFB2 /* CategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableViewCell.swift; sourceTree = "<group>"; };
+		668A19D12A614E1B0005BF86 /* URLSessionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +168,7 @@
 				6622FAE22A603060008AA5D6 /* SpinnerService.swift */,
 				6622FAF32A605A4C008AA5D6 /* CacheManager.swift */,
 				6622FAF52A605A7F008AA5D6 /* RealmModels.swift */,
+				668A19D12A614E1B0005BF86 /* URLSessionService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -297,6 +300,7 @@
 				6672EBB32A5C16E200D8CFB2 /* CategoriesViewController.swift in Sources */,
 				6622FADB2A601BA6008AA5D6 /* BookListTableViewCell.swift in Sources */,
 				6622FADD2A601C46008AA5D6 /* BookCellViewModel.swift in Sources */,
+				668A19D22A614E1B0005BF86 /* URLSessionService.swift in Sources */,
 				6622FAE32A603060008AA5D6 /* SpinnerService.swift in Sources */,
 				6622FAE52A60308C008AA5D6 /* Spinner.swift in Sources */,
 				6622FAF62A605A7F008AA5D6 /* RealmModels.swift in Sources */,

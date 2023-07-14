@@ -16,63 +16,54 @@ protocol NetworkServiceProtocol {
 
 
 class NetworkService: NetworkServiceProtocol {
-    
     private let baseURL: String
     private let token: String
+    private let urlSessionService: URLSessionServiceProtocol
     
-    init(baseURL: String = "https://api.nytimes.com/svc/books/v3/", token: String = "ZRRgQ8cHos6TN6JwAP3KwSWUACYGAHLU") {
+    init(baseURL: String = "https://api.nytimes.com/svc/books/v3/",
+         token: String = "ZRRgQ8cHos6TN6JwAP3KwSWUACYGAHLU",
+         urlSessionService: URLSessionServiceProtocol = URLSessionService())
+    {
         self.baseURL = baseURL
         self.token = token
+        self.urlSessionService = urlSessionService
     }
     
     func fetchCategories() async throws -> CategoriesResponse {
         guard let url = URL(string: "\(baseURL)/lists/names.json?api-key=\(token)") else {
-            throw NetworkServiceError.invalidURL
+            throw NetworkServiceError.invalidURL(description: "Invalid URL for fetching categories.")
         }
         
-        let (data, response) = try await URLSession.shared.data(from: url)
-        
-        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-            print("Error")
-            throw NetworkServiceError.serverError
-        }
         do {
-            let categoriesResponse = try JSONDecoder().decode(CategoriesResponse.self, from: data)
-            return categoriesResponse
+            return try await urlSessionService.fetchData(from: url)
         } catch {
-            throw NetworkServiceError.decodingError
+            throw NetworkServiceError.serverError(description: "Failed to fetch categories. \(error.localizedDescription)")
         }
     }
     
     func fetchBooks(name: String) async throws -> BooksListResponse {
         guard let url = URL(string: "\(baseURL)lists/current/\(name).json?api-key=\(token)") else {
-            throw NetworkServiceError.invalidURL
-        }
-        let (data, response) = try await URLSession.shared.data(from: url)
-        
-        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-            throw NetworkServiceError.serverError
+            throw NetworkServiceError.invalidURL(description: "Invalid URL for fetching books.")
         }
         
         do {
-            let booksListResponse = try JSONDecoder().decode(BooksListResponse.self, from: data)
-            return booksListResponse
+            return try await urlSessionService.fetchData(from: url)
         } catch {
-            throw NetworkServiceError.decodingError
+            throw NetworkServiceError.serverError(description: "Failed to fetch books. \(error.localizedDescription)")
         }
     }
     
     func fetchImage(from url: URL) async throws -> UIImage {
-        let (data, _) = try await URLSession.shared.data(from: url)
-        guard let image = UIImage(data: data) else {
-            throw NetworkServiceError.decodingError
+        do {
+            return try await urlSessionService.fetchImage(from: url)
+        } catch {
+            throw NetworkServiceError.decodingError(description: "Failed to fetch image. \(error.localizedDescription)")
         }
-        return image
     }
 }
 
 enum NetworkServiceError: Error {
-    case invalidURL
-    case serverError
-    case decodingError
+    case invalidURL(description: String)
+    case serverError(description: String)
+    case decodingError(description: String)
 }
